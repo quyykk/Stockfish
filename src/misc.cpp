@@ -65,6 +65,7 @@ using fun8_t = bool(*)(HANDLE, BOOL, PTOKEN_PRIVILEGES, DWORD, PTOKEN_PRIVILEGES
 
 #include "misc.h"
 #include "thread.h"
+#include "version.h"
 
 using namespace std;
 
@@ -154,32 +155,8 @@ public:
 
 string engine_info(bool to_uci) {
   stringstream ss;
-  ss << "Stockfish " << version << setfill('0');
-
-  if constexpr (version == "dev")
-  {
-      ss << "-";
-      #ifdef GIT_DATE
-      ss << stringify(GIT_DATE);
-      #else
-      constexpr string_view months("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec");
-      string month, day, year;
-      stringstream date(__DATE__); // From compiler, format is "Sep 21 2008"
-
-      date >> month >> day >> year;
-      ss << year << setw(2) << setfill('0') << (1 + months.find(month) / 4) << setw(2) << setfill('0') << day;
-      #endif
-
-      ss << "-";
-
-      #ifdef GIT_SHA
-      ss << stringify(GIT_SHA);
-      #else
-      ss << "nogit";
-      #endif
-  }
-
-  ss << (to_uci  ? "\nid author ": " by ")
+  ss << "Stockfish " << VersionString
+     << (to_uci ? "\nid author " : " by ")
      << "the Stockfish developers (see AUTHORS file)";
 
   return ss.str();

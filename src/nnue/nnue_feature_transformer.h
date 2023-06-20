@@ -65,7 +65,7 @@ namespace Stockfish::Eval::NNUE {
   #define NumRegistersSIMD 32
   #define MaxChunkSize 64
 
-  #elif USE_AVX2
+  #elif defined(USE_AVX2)
   using vec_t = __m256i;
   using psqt_vec_t = __m256i;
   #define vec_load(a) _mm256_load_si256(a)
@@ -89,7 +89,7 @@ namespace Stockfish::Eval::NNUE {
   #define NumRegistersSIMD 16
   #define MaxChunkSize 32
 
-  #elif USE_SSE2
+  #elif defined(USE_SSE2)
   using vec_t = __m128i;
   using psqt_vec_t = __m128i;
   #define vec_load(a) (*(a))
@@ -110,7 +110,7 @@ namespace Stockfish::Eval::NNUE {
   #define NumRegistersSIMD (Is64Bit ? 16 : 8)
   #define MaxChunkSize 16
 
-  #elif USE_MMX
+  #elif defined(USE_MMX)
   using vec_t = __m64;
   using psqt_vec_t = __m64;
   #define vec_load(a) (*(a))
@@ -138,7 +138,7 @@ namespace Stockfish::Eval::NNUE {
   #define NumRegistersSIMD 8
   #define MaxChunkSize 8
 
-  #elif USE_NEON
+  #elif defined(USE_NEON)
   using vec_t = int16x8_t;
   using psqt_vec_t = int32x4_t;
   #define vec_load(a) (*(a))

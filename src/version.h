@@ -16,36 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EVALUATE_H_INCLUDED
-#define EVALUATE_H_INCLUDED
+#ifndef VERSION_H_INCLUDED
+#define VERSION_H_INCLUDED
 
-#include <string>
-#include <optional>
+#define VersionString  "dev-20230604-8dea0705"
 
-#include "nnue.h"
-#include "types.h"
-
-namespace Stockfish {
-
-class Position;
-
-namespace Eval {
-
-  std::string trace(Position& pos);
-  Value evaluate(const Position& pos);
-
-  extern bool useNNUE;
-  extern std::string currentEvalFileName;
-
-  namespace NNUE {
-
-    void init();
-    void verify();
-
-  } // namespace NNUE
-
-} // namespace Eval
-
-} // namespace Stockfish
-
-#endif // #ifndef EVALUATE_H_INCLUDED
+#endif // #ifndef NNUE_H_INCLUDED

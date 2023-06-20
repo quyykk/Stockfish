@@ -16,36 +16,11 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef EVALUATE_H_INCLUDED
-#define EVALUATE_H_INCLUDED
+#ifndef NNUE_H_INCLUDED
+#define NNUE_H_INCLUDED
 
-#include <string>
-#include <optional>
+// The default net name MUST follow the format nn-[SHA256 first 12 digits].nnue
+// for the build process (profile-build and fishtest) to work.
+#define EvalFileDefaultName  "/home/user/projects/Stockfish/build/nn-8d69132723e2.nnue"
 
-#include "nnue.h"
-#include "types.h"
-
-namespace Stockfish {
-
-class Position;
-
-namespace Eval {
-
-  std::string trace(Position& pos);
-  Value evaluate(const Position& pos);
-
-  extern bool useNNUE;
-  extern std::string currentEvalFileName;
-
-  namespace NNUE {
-
-    void init();
-    void verify();
-
-  } // namespace NNUE
-
-} // namespace Eval
-
-} // namespace Stockfish
-
-#endif // #ifndef EVALUATE_H_INCLUDED
+#endif // #ifndef NNUE_H_INCLUDED

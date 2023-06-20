@@ -63,9 +63,57 @@
 
 #define ASSERT_ALIGNED(ptr, alignment) assert(reinterpret_cast<uintptr_t>(ptr) % alignment == 0)
 
-#if defined(_WIN64) && defined(_MSC_VER) // No Makefile used
+#if defined(_WIN64) && defined(_MSC_VER)
 #  include <intrin.h> // Microsoft header for _BitScanForward64()
-#  define IS_64BIT
+#endif
+
+/// Auto detect architecture support
+#ifdef __POPCNT__
+#  define USE_POPCNT
+#endif
+#ifdef __SSE__
+#  ifndef USE_SSE
+#    define USE_SSE
+#  endif
+#  ifdef NO_PREFETCH
+#    undef NO_PREFETCH
+#  endif
+#endif
+#if defined(__BMI2__) && !defined(USE_PEXT)
+#  define USE_PEXT
+#endif
+#if defined(__MMX_WITH_SSE__) && !defined(USE_MMX)
+#  define USE_MMX
+#endif
+#if defined(__SSE2__) && !defined(USE_SSE2)
+#  define USE_SSE2
+#endif
+#if defined(__SSSE3__) && !defined(USE_SSSE3)
+#  define USE_SSSE3
+#endif
+#if defined(__SSE4_1__) && !defined(USE_SSE41)
+#  define USE_SSE41
+#endif
+#if defined(__AVX2__) && !defined(USE_AVX2)
+#  define USE_AVX2
+#endif
+#if defined(__AVXVNNI__) && !defined(USE_AVXVNNI)
+#  define USE_AVXVNNI
+#  ifndef USE_VNNI
+#    define USE_VNNI
+#  endif
+#endif
+#if defined(__AVX512F__) && !defined(USE_AVX512)
+#  define USE_AVX512
+#endif
+#if defined(__AVX512VNNI__) && !defined(USE_VNNI)
+#  define USE_VNNI
+#endif
+#if defined(__ARM_NEON) && !defined(USE_NEON)
+#  define USE_NEON
+#endif
+#if defined(__ARM_FEATURE_DOTPROD) && !defined(USE_NEON_DOTPROD)
+#  define USE_NEON_DOTPROD
 #endif
 
 #if defined(USE_POPCNT) && (defined(__INTEL_COMPILER) || defined(_MSC_VER))
